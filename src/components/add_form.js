@@ -7,7 +7,7 @@ export default class AddForm extends Component {
         this.state = {
             form: {
                 title: '',
-                description: ''
+                details: ''
             }
         }
 
@@ -33,7 +33,7 @@ export default class AddForm extends Component {
         this.setState({
             form: {
                 title: '',
-                description: ''
+                details: ''
             }
         })
     }
@@ -49,10 +49,10 @@ export default class AddForm extends Component {
                     onChange={(event) => this.handleInputChange(event, 'title')}
                 />
                 <input
-                    value={form.description}
+                    value={form.details}
                     className="form-control mb-2 mr-sm-2 mb-sm-0"
-                    placeholder="Description"
-                    onChange={(event) => this.handleInputChange(event, 'description')}
+                    placeholder="Details"
+                    onChange={(event) => this.handleInputChange(event, 'details')}
                 />
                 <button className="btn btn-outline-success">Add Item</button>
             </form>

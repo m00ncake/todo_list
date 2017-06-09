@@ -1,40 +1,62 @@
 import React, { Component } from 'react';
-import listData from './data/todo_data';
 import ViewList from './view_list';
 import AddForm from './add_form';
+import axios from 'axios';
 
 class App extends Component {
     constructor(props){
         super(props);
 
         this.state = {
-            list: listData
-        }
+            list: []
+        };
+        this.BASE_URL = 'http://api.scottbowlerdev.com';
+        this.API_KEY = '?key=c417m00ncake';
     }
 
-    addItem(item){
-        item.completed = false;
-        const { list } = this.state;
+    componentDidMount() {
+        this.getData();
+    }
 
-        this.setState({
-            list: [item, ...list]
+    getData(){
+        axios.get(`${this.BASE_URL}/todos${this.API_KEY}`).then((resp) => {
+            console.log(resp);
+            console.log('componentDidMount server response:', resp.data.todos);
+
+            this.setState({
+                list: resp.data.todos
+            });
         });
     }
 
-    deleteItem(index) {
-        const { list } = this.state;
-        list.splice(index,1);
-        this.setState({
-            list: [...list]
-        })
+    addItem(item){
+        axios.post(`${this.BASE_URL}/todos${this.API_KEY}`, item).then((resp) => {
+            console.log('Server resp: ', resp.data.success);
+            if(resp.data.success){
+                this.getData();
+            }
+        });
     }
 
-    toggleComplete(index) {
-        const { list } = this.state;
-        list[index].completed = !list[index].completed;
-        this.setState({
-            list: [...list]
-        })
+    deleteItem(id) {
+        console.log('Item id of item to be deleted: ', id);
+        axios.delete(`${this.BASE_URL}/todos/${id + this.API_KEY}`).then((resp) => {
+            console.log('Response from Delete:', resp);
+            if(resp.data.success){
+                this.getData();
+            }
+        });
+
+    }
+
+    toggleComplete(id) {
+        console.log('Toggled Completed item:', id);
+        axios.put(`${this.BASE_URL}/todos/${id + this.API_KEY}`).then((resp) => {
+            console.log('Response from Completed: ', resp);
+            if(resp.data.success){
+                this.getData();
+            }
+        });
     }
 
     render() {

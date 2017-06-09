@@ -6,17 +6,17 @@ class ViewList extends Component {
 
            return (
                <li className="list-group-item" key={index}>
-                   {`${item.title} | completed: ${item.completed}`}
+                   {`${item.title} | complete: ${item.complete}`}
                    <span className="ml-auto">
                        <button
-                           onClick={() => this.props.delete(index)}
+                           onClick={() => this.props.delete(item._id)}
                            className="btn btn-outline-danger btn-sm">
                            Delete
                        </button>
                        <button
-                           onClick={() => this.props.complete(index)}
+                           onClick={() => this.props.complete(item._id)}
                            className="btn btn-outline-warning btn-sm">
-                           {item.completed ? 'Restore' : 'Complete'}
+                           {item.complete ? 'Restore' : 'Complete'}
                        </button>
                    </span>
                </li>
