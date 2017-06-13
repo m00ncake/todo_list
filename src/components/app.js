@@ -1,14 +1,20 @@
 import React from 'react';
-import './app.css';
-import logo from './imgs/logo.svg';
+import {
+    BrowserRouter as Router,
+    Link,
+    Route
+} from 'react-router-dom';
+import ViewList from './view_list';
+import ViewTodo from './view_todo';
 
 const App = () => (
-    <div>
-        <div className="app">
-            <img src={logo} className="rotate"/>
-            <h1>Welcome to React!</h1>
+    <Router>
+        <div className="container">
+            <h1>To Do List</h1>
+            <Route exact path="/" component={ViewList}/>
+            <Route path="/todo/:id" component={ViewTodo}/>
         </div>
-    </div>
+    </Router>
 );
 
 export default App;
